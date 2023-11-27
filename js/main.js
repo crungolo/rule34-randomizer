@@ -6,7 +6,7 @@ const basicAnyOfTags = ["vaginal", "anal", "fellatio", "bondage"];
 const anyOfTagsInsert = document.getElementById("any-of-tags");
 const addAnyOfText = document.getElementById("add-any-of");
 
-const basicNoneOfTags = ["gore", "creampie", "cum"];
+const basicNoneOfTags = ["gore", "creampie"];
 const noneOfTagsInsert = document.getElementById("none-of-tags");
 const addNoneOfText = document.getElementById("add-none-of");
 
