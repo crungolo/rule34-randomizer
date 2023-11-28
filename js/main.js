@@ -6,7 +6,7 @@ const basicAnyOfTags = ["vaginal", "anal", "fellatio", "bondage"];
 const anyOfTagsInsert = document.getElementById("any-of-tags");
 const addAnyOfText = document.getElementById("add-any-of");
 
-const basicNoneOfTags = ["gore", "creampie"];
+const basicNoneOfTags = ["gore", "creampie", "cum"];
 const noneOfTagsInsert = document.getElementById("none-of-tags");
 const addNoneOfText = document.getElementById("add-none-of");
 
@@ -25,9 +25,13 @@ const start = () => {
     if(sessionStorage.getItem("noneOfTags") === null) {
         sessionStorage.setItem("noneOfTags", basicNoneOfTags)
     }
-    let allOfTags = sessionStorage.getItem("allOfTags").split(",")
-    let anyOfTags = sessionStorage.getItem("anyOfTags").split(",")
-    let noneOfTags = sessionStorage.getItem("noneOfTags").split(",")
+    let allOfTags = sessionStorage.getItem("allOfTags")
+    let anyOfTags = sessionStorage.getItem("anyOfTags")
+    let noneOfTags = sessionStorage.getItem("noneOfTags")
+
+    if (allOfTags.length > 0) allOfTags = allOfTags.split(",");
+    if (anyOfTags.length > 0) anyOfTags = anyOfTags.split(",");
+    if (noneOfTags.length > 0) noneOfTags = noneOfTags.split(",");
 
     allOfTagsInsert.innerHTML = "";
     anyOfTagsInsert.innerHTML = "";
@@ -147,6 +151,7 @@ const addAllOf = () => {
     allOfTags.push(tag);
     allOfTags = [...new Set(allOfTags)];
     sessionStorage.setItem("allOfTags", allOfTags);
+    addAllOfText.value = "";
 
     start();
 }
@@ -157,6 +162,7 @@ const addAnyOf = () => {
     anyOfTags.push(tag);
     anyOfTags = [...new Set(anyOfTags)];
     sessionStorage.setItem("anyOfTags", anyOfTags);
+    addAnyOfText.value = "";
 
     start();
 }
@@ -167,6 +173,7 @@ const addNoneOf = () => {
     noneOfTags.push(tag);
     noneOfTags = [...new Set(noneOfTags)];
     sessionStorage.setItem("noneOfTags", noneOfTags);
+    addNoneOfText.value = "";
 
     start();
 }
@@ -246,5 +253,3 @@ const remove = (arr, func) =>
             return acc.concat(val);
         }, [])
         : [];
-
-
