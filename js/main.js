@@ -16,18 +16,18 @@ const insertImg = document.getElementById("insert-img");
 const button = document.getElementById("generate-button");
 
 const start = () => {
-    if(sessionStorage.getItem("allOfTags") === null) {
-        sessionStorage.setItem("allOfTags", basicAllOfTags)
+    if(localStorage.getItem("allOfTags") === null) {
+        localStorage.setItem("allOfTags", basicAllOfTags)
     }
-    if(sessionStorage.getItem("anyOfTags") === null) {
-        sessionStorage.setItem("anyOfTags", basicAnyOfTags)
+    if(localStorage.getItem("anyOfTags") === null) {
+        localStorage.setItem("anyOfTags", basicAnyOfTags)
     }
-    if(sessionStorage.getItem("noneOfTags") === null) {
-        sessionStorage.setItem("noneOfTags", basicNoneOfTags)
+    if(localStorage.getItem("noneOfTags") === null) {
+        localStorage.setItem("noneOfTags", basicNoneOfTags)
     }
-    let allOfTags = sessionStorage.getItem("allOfTags")
-    let anyOfTags = sessionStorage.getItem("anyOfTags")
-    let noneOfTags = sessionStorage.getItem("noneOfTags")
+    let allOfTags = localStorage.getItem("allOfTags")
+    let anyOfTags = localStorage.getItem("anyOfTags")
+    let noneOfTags = localStorage.getItem("noneOfTags")
 
     if (allOfTags.length > 0) allOfTags = allOfTags.split(",");
     if (anyOfTags.length > 0) anyOfTags = anyOfTags.split(",");
@@ -38,28 +38,28 @@ const start = () => {
     noneOfTagsInsert.innerHTML = "";
     if (allOfTags && allOfTags.length > 0) {
         let ul = document.createElement("ul");
-        ul.className = "list-group";
+        ul.className = "list-group mb-2";
         allOfTags.forEach(tag => {
             let row = document.createElement("div");
-            row.className = "row g-0";
+            row.className = "row";
             let col11 = document.createElement("div");
-            col11.className = "col-11 pe-0";
+            col11.className = "col-11";
             let col1 = document.createElement("div");
-            col1.className = "col-1 g-0";
+            col1.className = "col-1 p-0";
 
             let li = document.createElement("li");
             li.className = "list-group-item";
             li.innerHTML = tag;
             let button = document.createElement("button");
             button.id = "remove-" + tag;
-            button.className = "btn btn-light h-100"
+            button.className = "btn btn-danger h-100 w-100"
             button.type = "button";
             button.innerHTML = "X"
             button.onclick = () => {
-                sessionList = sessionStorage.getItem("allOfTags").split(",");
+                sessionList = localStorage.getItem("allOfTags").split(",");
                 let removeTag = button.id.split("-")[1];
                 sessionList = remove(sessionList, element => element != removeTag);
-                sessionStorage.setItem("allOfTags", sessionList);
+                localStorage.setItem("allOfTags", sessionList);
 
                 start();
             }
@@ -74,28 +74,28 @@ const start = () => {
     
     if (anyOfTags && anyOfTags.length > 0) {
         let ul = document.createElement("ul");
-        ul.className = "list-group";
+        ul.className = "list-group mb-2";
         anyOfTags.forEach(tag => {
             let row = document.createElement("div");
-            row.className = "row g-0";
+            row.className = "row";
             let col11 = document.createElement("div");
-            col11.className = "col-11 pe-0";
+            col11.className = "col-11";
             let col1 = document.createElement("div");
-            col1.className = "col-1 g-0";
+            col1.className = "col-1 p-0";
 
             let li = document.createElement("li");
             li.className = "list-group-item";
             li.innerHTML = tag;
             let button = document.createElement("button");
             button.id = "remove-" + tag;
-            button.className = "btn btn-light h-100"
+            button.className = "btn btn-danger h-100 w-100"
             button.type = "button";
             button.innerHTML = "X"
             button.onclick = () => {
-                sessionList = sessionStorage.getItem("anyOfTags").split(",");
+                sessionList = localStorage.getItem("anyOfTags").split(",");
                 let removeTag = button.id.split("-")[1];
                 sessionList = remove(sessionList, element => element != removeTag);
-                sessionStorage.setItem("anyOfTags", sessionList);
+                localStorage.setItem("anyOfTags", sessionList);
 
                 start();
             }
@@ -110,28 +110,28 @@ const start = () => {
     
     if (noneOfTags && noneOfTags.length > 0) {
         let ul = document.createElement("ul");
-        ul.className = "list-group";
+        ul.className = "list-group mb-2";
         noneOfTags.forEach(tag => {
             let row = document.createElement("div");
-            row.className = "row g-0";
+            row.className = "row";
             let col11 = document.createElement("div");
-            col11.className = "col-11 pe-0";
+            col11.className = "col-11";
             let col1 = document.createElement("div");
-            col1.className = "col-1 g-0";
+            col1.className = "col-1 p-0";
 
             let li = document.createElement("li");
             li.className = "list-group-item";
             li.innerHTML = tag;
             let button = document.createElement("button");
             button.id = "remove-" + tag;
-            button.className = "btn btn-light h-100"
+            button.className = "btn btn-danger h-100 w-100"
             button.type = "button";
             button.innerHTML = "X"
             button.onclick = () => {
-                sessionList = sessionStorage.getItem("noneOfTags").split(",");
+                sessionList = localStorage.getItem("noneOfTags").split(",");
                 let removeTag = button.id.split("-")[1];
                 sessionList = remove(sessionList, element => element != removeTag);
-                sessionStorage.setItem("noneOfTags", sessionList);
+                localStorage.setItem("noneOfTags", sessionList);
 
                 start();
             }
@@ -147,10 +147,12 @@ const start = () => {
 
 const addAllOf = () => {
     let tag = addAllOfText.value;
-    allOfTags = sessionStorage.getItem("allOfTags").split(",")
+    if (tag == "") return;
+    console.log(localStorage.getItem("allOfTags"))
+    allOfTags = localStorage.getItem("allOfTags") == "" ? [] : localStorage.getItem("allOfTags").split(",");
     allOfTags.push(tag);
     allOfTags = [...new Set(allOfTags)];
-    sessionStorage.setItem("allOfTags", allOfTags);
+    localStorage.setItem("allOfTags", allOfTags);
     addAllOfText.value = "";
 
     start();
@@ -158,10 +160,11 @@ const addAllOf = () => {
 
 const addAnyOf = () => {
     let tag = addAnyOfText.value;
-    anyOfTags = sessionStorage.getItem("anyOfTags").split(",")
+    if (tag == "") return;
+    anyOfTags = localStorage.getItem("anyOfTags") == "" ? [] : localStorage.getItem("anyOfTags").split(",");
     anyOfTags.push(tag);
     anyOfTags = [...new Set(anyOfTags)];
-    sessionStorage.setItem("anyOfTags", anyOfTags);
+    localStorage.setItem("anyOfTags", anyOfTags);
     addAnyOfText.value = "";
 
     start();
@@ -169,10 +172,11 @@ const addAnyOf = () => {
 
 const addNoneOf = () => {
     let tag = addNoneOfText.value;
-    noneOfTags = sessionStorage.getItem("noneOfTags").split(",")
+    if (tag == "") return;
+    noneOfTags = localStorage.getItem("noneOfTags") == "" ? [] : localStorage.getItem("noneOfTags").split(",");
     noneOfTags.push(tag);
     noneOfTags = [...new Set(noneOfTags)];
-    sessionStorage.setItem("noneOfTags", noneOfTags);
+    localStorage.setItem("noneOfTags", noneOfTags);
     addNoneOfText.value = "";
 
     start();
@@ -208,7 +212,7 @@ const getImage = async () => {
                 return;
             }
 
-            noneOfTags = sessionStorage.getItem("noneOfTags").split(",");  
+            noneOfTags = localStorage.getItem("noneOfTags").split(",");  
             response = remove(response, element => !element.file_url.endsWith('.mp4'));
             noneOfTags.forEach(tag => {
                 response = remove(response, element => !element.tags.includes(tag))
@@ -236,10 +240,10 @@ const getImage = async () => {
 }
 
 const createQuery = () => {
-    allOfTags = sessionStorage.getItem("allOfTags").split(",");
+    allOfTags = localStorage.getItem("allOfTags").split(",");
     let ret = allOfTags.join('%20');
 
-    anyOfTags = sessionStorage.getItem("anyOfTags").split(",");
+    anyOfTags = localStorage.getItem("anyOfTags").split(",");
     let randomAnyOfTag = Math.floor(Math.random() * anyOfTags.length);
     ret = ret + '%20' + anyOfTags[randomAnyOfTag];
 
