@@ -148,7 +148,6 @@ const start = () => {
 const addAllOf = () => {
     let tag = addAllOfText.value;
     if (tag == "") return;
-    console.log(localStorage.getItem("allOfTags"))
     allOfTags = localStorage.getItem("allOfTags") == "" ? [] : localStorage.getItem("allOfTags").split(",");
     allOfTags.push(tag);
     allOfTags = [...new Set(allOfTags)];
@@ -218,7 +217,6 @@ const getImage = async () => {
                     response = remove(response, element => !element.tags.includes(tag))
                 })
             }
-            console.log(response);
 
             let post;
 
@@ -231,7 +229,6 @@ const getImage = async () => {
                 warning.innerHTML += "(Error: 002)"
                 insertImg.appendChild(warning);
             } else {
-                console.log(post);
                 p.innerHTML = `Tags: ${post.tags} \n Id: ${post.id}`;
                 img.src = post.file_url
                 insertImg.appendChild(p);
@@ -243,8 +240,11 @@ const getImage = async () => {
 
 const createQuery = () => {
     allOfTags = localStorage.getItem("allOfTags").split(",");
-    let ret = allOfTags.join('%20');
-
+    let ret;
+    if (allOfTags[0] !== '') {
+        ret = allOfTags.join('%20');
+    }
+    
     anyOfTags = localStorage.getItem("anyOfTags").split(",");
     if (anyOfTags[0] !== '') {
         let randomAnyOfTag = Math.floor(Math.random() * anyOfTags.length);
