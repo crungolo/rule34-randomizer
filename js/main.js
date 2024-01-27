@@ -187,7 +187,6 @@ const getImage = async () => {
     const randomPage = Math.floor(Math.random() * 10);
 
     const request = `${API_BASE_URL}?page=dapi&s=post&q=index&json=1&tags=${createQuery()}&pid=${randomPage}`;
-    console.log(request)
 
     fetch(request, {
         method: "GET"
@@ -214,9 +213,12 @@ const getImage = async () => {
 
             noneOfTags = localStorage.getItem("noneOfTags").split(",");  
             response = remove(response, element => !element.file_url.endsWith('.mp4'));
-            noneOfTags.forEach(tag => {
-                response = remove(response, element => !element.tags.includes(tag))
-            })
+            if (noneOfTags[0] !== '') {
+                noneOfTags.forEach(tag => {
+                    response = remove(response, element => !element.tags.includes(tag))
+                })
+            }
+            console.log(response);
 
             let post;
 
@@ -244,8 +246,10 @@ const createQuery = () => {
     let ret = allOfTags.join('%20');
 
     anyOfTags = localStorage.getItem("anyOfTags").split(",");
-    let randomAnyOfTag = Math.floor(Math.random() * anyOfTags.length);
-    ret = ret + '%20' + anyOfTags[randomAnyOfTag];
+    if (anyOfTags[0] !== '') {
+        let randomAnyOfTag = Math.floor(Math.random() * anyOfTags.length);
+        ret = ret + '%20' + anyOfTags[randomAnyOfTag];
+    }
 
     return ret;
 }
